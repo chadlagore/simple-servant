@@ -1,1 +1,1 @@
-web: python manage.py runserver 0:$PORT
+web: gunicorn simple_servant.wsgi --log-file -
