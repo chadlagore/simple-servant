@@ -1,6 +1,10 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+from django.http import JsonResponse
 
-# Create your views here.
+
 def receive_data(request):
-    return HttpResponse(status=200)
+    if request.method == 'GET':
+        return render(request, 'index.html')
+    else:
+        return HttpResponse(status=200)
