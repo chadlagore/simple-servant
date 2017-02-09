@@ -1,1 +1,1 @@
-web: gunicorn simple_servant.wsgi --log-file -
+web: python manage.py run_gunicorn
