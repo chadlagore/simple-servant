@@ -8,7 +8,7 @@ import datetime
 @csrf_exempt
 def receive_data(request):
     if request.method == 'GET':
-        return render(request, 'index.html', {'data': None}) #TrafficData.objects.all()
+        return render(request, 'index.html', {'data': TrafficData.objects.all()})
     else:
         dataPackage = TrafficData()
 
@@ -17,7 +17,7 @@ def receive_data(request):
 
         dataPackage.carCount = pairs[0].split('=')[1]
         dataPackage.latitude = pairs[1].split('=')[1]
-        dataPackage.longitude = pairs[3].split('=')[1]
+        dataPackage.longitude = pairs[3].split('=')[1] 
         timeStr = pairs[2].split('=')[1]
 
         hours = int(timeStr[0:2])
