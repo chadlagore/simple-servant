@@ -8,7 +8,7 @@ import datetime
 @csrf_exempt
 def receive_data(request):
     if request.method == 'GET':
-        return render(request, 'index.html', {'data': TrafficData.objects.all()})
+        return render(request, 'index.html', {'data': None}) #TrafficData.objects.all()
     else:
         dataPackage = TrafficData()
 
