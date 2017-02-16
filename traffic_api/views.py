@@ -8,7 +8,20 @@ import datetime
 @csrf_exempt
 def receive_data(request):
     if request.method == 'GET':
-        return render(request, 'index.html')
+        data = TrafficData.objects.all()
+        # datum1 = {}
+        # datum1['carCount'] = 24
+        # datum1['latitude'] = 14.5266
+        # datum1['longitude'] = 128.5257
+        # datum1['timestamp'] = datetime.datetime.utcnow()
+        #
+        # datum2 = {}
+        # datum2['carCount'] = 12
+        # datum2['latitude'] = 14.7378
+        # datum2['longitude'] = 128.4572
+        # datum2['timestamp'] = datetime.datetime.utcnow()
+
+        return render(request, 'index.html', {'data': data})
     else:
         dataPackage = TrafficData()
 
@@ -30,9 +43,5 @@ def receive_data(request):
         dataPackage.timestamp = datetime.datetime.combine(date, time)
 
         dataPackage.save()
-        # print('Cars: ' + dataPackage.carCount)
-        # print('Latitude: ' + dataPackage.latitude)
-        # print('Longitude: ' + dataPackage.longitude)
-        # print('Timestamp: ' + datetime.datetime.strftime(dataPackage.timestamp, "%d/%m/%y %H:%M:%S"))
 
         return HttpResponse(status=200)

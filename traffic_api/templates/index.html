@@ -1,1 +1,7 @@
-<h1>Hey</h1>
+<h1>Traffic Data 🚗</h1>
+
+{% for datum in data %}
+<p>Car Count: {{datum.carCount}}</p><br/>
+<p>Time: {{datum.timestamp}}</p><br/>
+<p>Coordinates: {{datum.latitude}}, {{datum.longitude}}</p>
+{% endfor %}
