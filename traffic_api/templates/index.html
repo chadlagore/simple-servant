@@ -1,7 +1,34 @@
-<h1>Traffic Data 🚗</h1>
-
-{% for datum in data %}
-<p>Car Count: {{datum.carCount}}</p><br/>
-<p>Time: {{datum.timestamp}}</p><br/>
-<p>Coordinates: {{datum.latitude}}, {{datum.longitude}}</p>
-{% endfor %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Street Smart ✅</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+    <h1>Traffic Data 🚗</h1>
+    <div class="container">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Car Count</th>
+                    <th>Time</th>
+                    <th>Coordinates</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for datum in data %}
+                <tr>
+                    <td>{{datum.carCount}}</td>
+                    <td>{{datum.timestamp}}</td>
+                    <td>{{datum.latitude}}, {{datum.longitude}}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
