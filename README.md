@@ -1,4 +1,4 @@
-# Street Smart Backend
+# Street Smart Backend [![Build Status](https://travis-ci.org/chadlagore/simple_servant.svg?branch=master)](https://travis-ci.org/chadlagore/simple_servant)
 
 
 ## Getting Started
