@@ -1,5 +1,9 @@
 # Street Smart Backend
 
+A backend and API for the Street**Smart** app.
+
+[![Build Status](https://travis-ci.org/chadlagore/simple_servant.svg?branch=master)](https://travis-ci.org/chadlagore/simple_servant)
+
 
 ## Getting Started
 
