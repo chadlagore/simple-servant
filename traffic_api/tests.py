@@ -1,3 +1,10 @@
 from django.test import TestCase
+import pytest
 
-# Create your tests here.
+
+# A test test?
+def inc(x):
+    return x + 1
+
+def test_answer():
+    assert inc(4) == 5
