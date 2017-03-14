@@ -1,4 +1,5 @@
 *.osm
+*.ipynb*
 *.csv
 *.json
 *.egg-info
