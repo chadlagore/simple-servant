@@ -10,6 +10,7 @@ class TrafficData(models.Model):
 
 
 class IntersectionData(models.Model):
+    id = models.BigIntegerField(null=False, primary_key=True)
     latitude = models.FloatField(null=False)
     longitude = models.FloatField(null=False)
     street_a = models.CharField(max_length=1024, null=True)
