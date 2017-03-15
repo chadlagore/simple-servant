@@ -6,6 +6,7 @@ from traffic_api.models import *
 from .carsim.get_cars import get_cars
 import time
 
+
 @csrf_exempt
 def receive_data(request):
     if request.method == 'GET':
@@ -35,7 +36,7 @@ def receive_data(request):
         return HttpResponse(status=200)
 
 @csrf_exempt
-def intersection_activity(request):
+def all_intersection_activity(request):
     out_data = IntersectionData.objects.all()
 
     # Convert all objects to dict.
