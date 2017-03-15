@@ -18,11 +18,13 @@ rates = {
     'late': 2
 }
 
-sig = 1.5
+sig = 2
 
 def get_cars(hour_of_day):
     mu = get_params(hour_of_day)
-    return random.gauss(mu, sig)
+
+    # Get rid of negative values.
+    return max(random.gauss(mu, sig), 0)
 
 
 def get_params(hour):
