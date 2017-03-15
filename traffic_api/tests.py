@@ -1,10 +1,10 @@
 from django.test import TestCase
+from django.test import RequestFactory
 import pytest
 
+from .carsim.get_cars import get_cars
 
-# A test test?
-def inc(x):
-    return x + 1
 
-def test_answer():
-    assert inc(4) == 5
+def test_cars_positive():
+    for i in range(1000):
+        assert get_cars(0) >= 0

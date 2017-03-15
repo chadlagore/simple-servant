@@ -1,4 +1,7 @@
 *.osm
+*.ipynb*
+*.csv
+*.json
 *.egg-info
 *.pot
 *.py[co]
