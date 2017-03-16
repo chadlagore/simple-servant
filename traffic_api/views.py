@@ -37,10 +37,24 @@ def receive_data(request):
 
 @csrf_exempt
 def all_intersection_activity(request):
-    out_data = IntersectionData.objects.all()
+
+    lat_lte = request.GET.get('lat_lte', '')
+    lat_gte = request.GET.get('lat_gte', '')
+    lon_gte = request.GET.get('lon_gte', '')
+    lon_lte = request.GET.get('lon_lte', '')
+
+    # Check if we have coordinates.
+    if lat_lte and lat_gte and lon_gte and lon_lte:
+        filtered = IntersectionData.objects.filter(
+            latitude__gte=lat_gte,
+            latitude__lte=lat_lte,
+            longitude__gte=lon_gte,
+            longitude__lte=lon_lte)
+    else:
+        filtered = IntersectionData.objects.all()
 
     # Convert all objects to dict.
-    results = [ob.as_json() for ob in out_data]
+    results = [ob.as_json() for ob in filtered]
 
     # Append car observations.
     hour = int(time.strftime("%H"))
