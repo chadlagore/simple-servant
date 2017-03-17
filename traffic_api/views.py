@@ -43,6 +43,8 @@ def all_intersection_activity(request):
     lon_gte = request.GET.get('lon_gte', '')
     lon_lte = request.GET.get('lon_lte', '')
 
+    intersection_id = request.GET.get('id', '')
+
     # Check if we have coordinates.
     if lat_lte and lat_gte and lon_gte and lon_lte:
         filtered = IntersectionData.objects.filter(
@@ -50,6 +52,10 @@ def all_intersection_activity(request):
             latitude__lte=lat_lte,
             longitude__gte=lon_gte,
             longitude__lte=lon_lte)
+    elif intersection_id:
+        filtered = IntersectionData.objects.filter(
+            id=intersection_id
+        )
     else:
         filtered = IntersectionData.objects.all()
 
