@@ -18,7 +18,7 @@ rates = {
     'late': 2
 }
 
-sig = 2
+sig = 0.5
 
 def get_cars(hour_of_day):
     mu = get_params(hour_of_day)
