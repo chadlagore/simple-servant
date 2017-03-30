@@ -26,3 +26,17 @@ class IntersectionData(models.Model):
 
     class Meta:
         unique_together = ('latitude', 'longitude')
+
+class HistoricalData(models.Model):
+    id = models.BigIntegerField(null=False, primary_key=True)
+    intersection = models.IntegerField(null=False)
+    timestamp = models.FloatField(null=False)
+    hour = models.IntegerField(null=False)
+    cars = models.FloatField(null=False)
+
+    def as_json(self, mock_id):
+        return dict(
+            id=mock_id,
+            hour=self.hour,
+            cars=self.cars
+        )
