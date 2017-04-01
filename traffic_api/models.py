@@ -34,9 +34,17 @@ class HistoricalData(models.Model):
     hour = models.IntegerField(null=False)
     cars = models.FloatField(null=False)
 
-    def as_json(self, mock_id):
+    def as_json(self, mock_id=None):
+        '''
+        Turns the record into a json, you pass in a mock integer if you want.
+
+        '''
+
+        intersection_id = mock_id if mock_id else self.intersection
+
         return dict(
-            id=mock_id,
+            id=intersection_id,
+            timestamp=self.timestamp,
             hour=self.hour,
             cars=self.cars
         )
