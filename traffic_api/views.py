@@ -132,7 +132,7 @@ def historical_request(request):
 
     # Now we can filter.
     filtered = HistoricalData.objects.filter(
-        intersection=intersection_id,
+        intersection=mock_id,
         timestamp__gte=start_date_ts,
         timestamp__lte=end_date_ts,
     )
@@ -146,7 +146,7 @@ def historical_request(request):
             'granularity': granularity,
             'start_date': start_date,
             'end_date': end_date,
-            'results': len(results)
+            'records': len(results)
         }, 'data': {}
     }
 
@@ -162,6 +162,8 @@ def historical_request(request):
     for result in results:
         stored = response['data'][result['timestamp']]
         response['data'][result['timestamp']] = stored + result['cars']
+
+    response['meta']['results'] = len(response['data'])
 
     # Only need to aggregate over timestamps if not hourly request.
     return JsonResponse(response, safe=False)
@@ -185,4 +187,5 @@ def floor_date(ts, granularity):
     else:
         dt_floor = dt
 
-    return time.mktime(dt_floor.timetuple()) + 8*3600
+    # Convert back to timestamp and add 8 hours (UTC).
+    return int(time.mktime(dt_floor.timetuple()) + 8*3600)
