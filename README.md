@@ -9,12 +9,28 @@ A backend and API for the Street**Smart** app.
 
 ## Getting Started
 
+You will require access to the Heroku database to do development.
+Get yourself added as a contributor on the Heroku app, collect the
+`DATABASE_URL` from the database settings page. Then prior to running the app,
+in your terminal:
+
+```
+export DATABASE_URL=<insert Heroku DB basic URL here>
+```
+
+To install the dependencies, create a virtual environment and activate it:
+
 ```bash
 conda create --name street_smart python=3.5
 source activate street_smart
-pip install -r requirements.txt          # if fails brew install postgresql
 ```
 
+Then,
+
+```bash
+pip install -r requirements.txt
+python manage.py runserver
+```
 
 ## Historical Data API
 
