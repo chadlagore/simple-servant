@@ -7,7 +7,7 @@ from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 
 from traffic_api.models import *
-from .carsim.get_cars import get_cars
+from .carsim.get_cars import get_cars, mock_traffic
 
 granularities = [
     'hourly',
@@ -22,6 +22,7 @@ time_missing_failure_msg = 'Time paramters must specified.'
 bad_granularity_msg = 'Granularity must be: ' + ', '.join(granularities)
 id_not_integer_msg = 'Intersection id must be an integer.'
 unimplemented_msg = 'Unimplemented feature: '
+time_stamp_failure_msg = 'Timestamp malformed.'
 
 num_mock_intersections = 6
 
@@ -102,13 +103,10 @@ def historical_request(request):
     start_date = request.GET.get('start_date', None)
     end_date = request.GET.get('end_date', None)
 
-    if granularity == 'weekly':
-        return HttpResponseBadRequest(unimplemented_msg + 'weekly')
-
     # Times stamps must exist and be integers.
     try:
-        start_date_ts = int(start_date)
-        end_date_ts = int(end_date)
+        start_date_ts = int(float(start_date))
+        end_date_ts = int(float(end_date))
 
     except ValueError:
         return HttpResponseBadRequest(time_stamp_failure_msg)
@@ -122,7 +120,8 @@ def historical_request(request):
 
     # Id must be an integer.
     try:
-        mock_id = int(intersection_id) % num_mock_intersections
+        # mock_id = int(intersection_id) % num_mock_intersections
+        id_int = int(intersection_id)
 
     except TypeError:
         return HttpResponseBadRequest(id_not_integer_msg)
@@ -130,39 +129,26 @@ def historical_request(request):
     except ValueError:
         return HttpResponseBadRequest(id_not_integer_msg)
 
-    # Now we can filter.
-    filtered = HistoricalData.objects.filter(
-        intersection=mock_id,
-        timestamp__gte=start_date_ts,
-        timestamp__lte=end_date_ts,
-    )
-
-    # Get filtered results from database and add mocked intersection id.
-    results = [ob.as_json(intersection_id) for ob in filtered]
-
+    # Response empty payload with metadata.
     response = {
         'meta': {
-            'id': intersection_id,
+            'id': id_int,
             'granularity': granularity,
-            'start_date': start_date,
-            'end_date': end_date,
-            'records': len(results)
+            'start_date': start_date_ts,
+            'end_date': end_date_ts,
+            'records': max(end_date_ts - start_date_ts / 60, 0)
         }, 'data': {}
     }
 
-    # Truncate (floor) the date, and aggregate the response.
-    for result in results:
-        result['cars'] = result['cars'] * 60 # This is a dirty hack for now.
-        result['timestamp'] = floor_date(result['timestamp'], granularity)
+    # Response data payload.
+    response['data'] = mock_traffic(
+        id=id_int,
+        granularity=granularity,
+        start_date=start_date_ts,
+        end_date=end_date_ts
+    )
 
-        # Add a new record at this timetamp.
-        response['data'][result['timestamp']] = 0
-
-    # Aggregate results into the response dict (simple sum).
-    for result in results:
-        stored = response['data'][result['timestamp']]
-        response['data'][result['timestamp']] = stored + result['cars']
-
+    # Add number of results to meta data.
     response['meta']['results'] = len(response['data'])
 
     # Only need to aggregate over timestamps if not hourly request.

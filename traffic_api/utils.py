@@ -1,6 +1,7 @@
 import datetime
 import time
 
+
 def floor_date(ts, granularity):
     '''
     Can pass in one of the granularities, floors the timestamp to the given
