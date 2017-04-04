@@ -11,6 +11,6 @@ def test_cars_positive():
 
 
 def test_floor_date():
-    assert floor_date(1490955890.0, 'daily') == 1490943600.0
-    assert floor_date(1490955890.0, 'monthly') == 1488355200.0
-    assert floor_date(1490955890.0, 'yearly') == 1483257600.0
+    assert floor_date(1490821240, 'daily') == 1490770800
+    assert floor_date(1490821240, 'monthly') == 1488355200
+    assert floor_date(1490821240, 'yearly') == 1483257600
