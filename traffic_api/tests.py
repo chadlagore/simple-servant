@@ -27,4 +27,4 @@ def test_cars_positive():
 
 def test_get_linreg_size_2():
     result = get_linreg(dummy_data)
-    assert get_linreg(dummy_data) == expected_result
+    assert result == expected_result
