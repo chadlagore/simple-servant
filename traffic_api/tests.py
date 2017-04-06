@@ -6,17 +6,17 @@ from .carsim.get_cars import get_cars
 from .utils import get_linreg
 
 
-dummy_data = {0:0, 2:2}
+dummy_data = {0:0, 2:2, 3:4}
 expected_result =  {
-    'intercept': 0.0,
-    'p_value': 0.0,
-    'r_squared': 1.0,
-    'slope': 1.0,
-    'std_err': 0.0,
-    'x1': 0,
-    'x2': 2,
-    'y1': 0.0,
-    'y2': 2.0
+    "slope": 1.2857142857142856,
+    "intercept": -0.1428571428571428,
+    "r_squared": 0.9642857142857141,
+    "p_value": 0.12103771832367702,
+    "std_err": 0.24743582965269748,
+    "y1": -0.1428571428571428,
+    "y2": 3.714285714285714,
+    "x1": 0,
+    "x2": 3
 }
 
 def test_cars_positive():
