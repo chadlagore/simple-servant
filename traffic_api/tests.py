@@ -19,6 +19,7 @@ expected_result =  {
     "x2": 3
 }
 
+
 def test_cars_positive():
     for i in range(1000):
         assert get_cars(0) >= 0
