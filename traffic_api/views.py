@@ -6,6 +6,8 @@ from django.http import HttpResponse, HttpResponseBadRequest
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 
+from .utils import get_linreg
+
 from traffic_api.models import *
 from .carsim.get_cars import get_cars, mock_traffic
 
@@ -23,6 +25,7 @@ bad_granularity_msg = 'Granularity must be: ' + ', '.join(granularities)
 id_not_integer_msg = 'Intersection id must be an integer.'
 unimplemented_msg = 'Unimplemented feature: '
 time_stamp_failure_msg = 'Timestamp malformed.'
+linreg_error_msg = "Linear regression could not be applied."
 
 num_mock_intersections = 6
 
@@ -150,6 +153,12 @@ def historical_request(request):
 
     # Add number of results to meta data.
     response['meta']['results'] = len(response['data'])
+
+    # Add regression coefficients if enough results.
+    if response['meta']['results'] > 1:
+        response['meta']['linreg'] = get_linreg(response['data'])
+    else:
+        response['meta']['linreg'] = linreg_error_msg
 
     # Only need to aggregate over timestamps if not hourly request.
     return JsonResponse(response, safe=False)
