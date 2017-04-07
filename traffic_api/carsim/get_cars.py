@@ -90,6 +90,7 @@ def mock_traffic(start_date, end_date, granularity, id):
     trend_wt = 0.0008
 
     # We seed with the id, nice hack to make intersections look the same.
+    random.seed(id)
     aggregate = {}
 
     # Generate a trendline.
